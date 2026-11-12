@@ -2,7 +2,7 @@
 
 [Explore the public demo](https://loop.vaddeynikhil.chatgpt.site)
 
-A working, frontend-only prototype of a connected company workspace. The public-facing landing page and Loop demo share the Dusk Glass design system. Everything runs in the browser; no account, backend, database, API key, or AI subscription is required.
+A working, frontend-only prototype of a connected company workspace. The public-facing landing page and Loop demo share independent Light/Dark color and Glass/Solid surface preferences. Everything runs in the browser; no account, backend, database, API key, or AI subscription is required.
 
 ## Start locally
 
@@ -12,12 +12,12 @@ From this directory:
 python3 -m http.server 5173 --bind 127.0.0.1 --directory dist
 ```
 
-Open http://127.0.0.1:5173. The landing page is `/`; the workspace starts at `/#app/home`. Use an HTTP server rather than opening `index.html` directly, because the application uses native JavaScript modules. There is no installation or build step. Any static host can serve the contents of `dist`.
+Open http://127.0.0.1:5173. The landing page is `/`; monthly plans are at `/pricing`; the workspace starts at `/#app/home`. Use an HTTP server rather than opening `index.html` directly, because the application uses native JavaScript modules. There is no installation or build step. Any static host can serve the contents of `dist`.
 
 With Node.js installed, run the focused model and waitlist adapter tests:
 
 ```sh
-node --test tests/core.test.js
+node --test tests/*.test.js
 ```
 
 ## Primary walkthrough
@@ -52,7 +52,7 @@ Edit `dist/config.js` and set `window.LOOP_WAITLIST_ENDPOINT` to the HTTPS endpo
 The endpoint must:
 
 - Accept JSON POST requests and allow the site origin using CORS.
-- Accept `email`, `name`, `company`, `teamSize`, `tools`, and `consent`.
+- Accept `email`, `name`, `company`, `teamSize`, `tools`, `plan`, and `consent`.
 - Return a successful HTTP response only when the entry has been accepted.
 - Return HTTP 409 for an already-registered email, if duplicate handling is supported.
 
@@ -81,6 +81,16 @@ Open **Settings → Reset demo data** and confirm to restore the original demons
 
 This is a demonstration, not a production collaboration system. Accounts, teammate presence, integrations, AI, summaries, and meetings are simulated. The meeting summary is a labeled prepared example; it does not analyze arbitrary edited notes. AI supports six deterministic intents and explains unsupported prompts. There is no live model, transcription, camera, microphone, external availability check, authentication, or cross-device synchronization.
 
-Dusk Glass is the completed theme; Pearl Glass is not included. Board and calendar edits use reliable forms rather than drag-and-drop. Documents use a lightweight editor rather than a full block database. Calendar events do not include recurrence or multi-day scheduling. Project names are seeded; project creation and permission administration are outside this prototype. Public-facing page content is implemented; the hosted site is publicly accessible. Loop is an independent project. Its people, company knowledge, and work items are fictional demo content, with no connection to another company, project, or data source.
+Board and calendar edits use reliable forms rather than drag-and-drop. Documents use a lightweight editor rather than a full block database. Calendar events do not include recurrence or multi-day scheduling. Project names are seeded; project creation and permission administration are outside this prototype. Public-facing page content is implemented; the hosted site is publicly accessible. Loop is an independent project. Its people, company knowledge, and work items are fictional demo content, with no connection to another company, project, or data source.
 
 The four referenced images were not attached; the visual treatment follows the written art direction. Fonts request DM Sans and Manrope from Google Fonts and fall back to the system interface font when unavailable. Avatars and all interface graphics are local SVG/initials assets.
+
+## Pricing and appearance upgrade
+
+Monthly pricing is proposed, not a purchasable subscription: Starter Free, Team $12/member/month, Business $24/member/month, and Enterprise Custom. Edit `dist/pricing-config.js` for prices, plan labels, availability, comparison rows, and FAQs. The estimator shares that configuration and accepts 1–1,000 members. Plan CTAs pass the selected plan into the existing waitlist form. Current local demo features, sample behaviors, and planned services are explicitly distinguished.
+
+`dist/tokens.css` defines all four color/surface combinations. `dist/appearance-boot.js` applies the stored preference before styles load, or follows system color preference on first use. `dist/appearance.js` controls both public-page Appearance and workspace Settings; preferences persist separately under `loop.appearance.v1`. Solid uses opaque working surfaces and no backdrop blur. Existing workspace records are preserved.
+
+`dist/graphics.js` contains original SVG Loop artwork and the conversation → task → meeting → knowledge illustration. `dist/motion.js` and `dist/motion.css` manage reveals, the replayable sequence, offscreen pausing, and interaction transitions. System reduced motion and the workspace preference disable decorative motion while keeping all content visible.
+
+Public page composition lives in `dist/marketing.js`, `dist/marketing-ui.js`, and `dist/pricing.js`; their responsive styling is in `dist/marketing.css`. Both HTML entry points load the same modules; `/pricing/index.html` supports direct navigation and refresh on a static host.

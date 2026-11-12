@@ -45,3 +45,19 @@ The earlier visual pass used seeded records; the landing-page preview is rendere
 ## Limits of verification
 
 This was a focused interaction and visual pass, not an exhaustive accessibility, browser-compatibility, security, or performance audit. No production service integrations, real authentication, external waitlist delivery, media infrastructure, or live AI behavior were tested because they are intentionally absent. Hosted deployment validation is reported separately in the delivery response.
+
+## Pricing, appearance, and motion upgrade
+
+All 12 automated cases pass (`node --test tests/*.test.js`): the original seven plus monthly estimator bounds/totals, feature availability metadata, first-paint system/default/explicit appearance precedence, reduced-motion boot behavior, and both static entry points loading appearance before CSS.
+
+Additional browser checks:
+- All four theme/material combinations across Home, Chat, Calendar, Docs, Projects, and Meetings (24 views), plus the quick-create dialog. No page/main horizontal overflow; Glass computed blur was 22px and Solid none.
+- Direct `/pricing` navigation and refresh; 25 Business members = $600/month; zero members produces a validation error and disables the plan CTA; selected Business plan reaches the waitlist.
+- Mobile 390px pricing and waitlist; required validation and explicit local-only submission. Corrected an inherited checkbox width rule causing consent-row overflow; verified the checkbox is 16px and the dialog has no horizontal overflow.
+- Light Glass workspace/landing, Light Solid workspace/landing, Dark Glass pricing/landing, and Dark Solid Projects inspected. New pages checked at 1440×900, 1280×800, 1024×800, and 390×844 across the pass.
+- Message-to-task creation, prepared meeting follow-up approval, and reviewed AI scheduling still update shared records. The scheduled calendar event and edited document content survive reload.
+- Keyboard search opens a matching task and restores focus to the search trigger when closed.
+- Reduced motion persists after reload: decorative ribbon animation is disabled, its trace is hidden, and revealed content remains visible. Appearance changes preserve workspace edits.
+- No application console errors observed during the theme/workflow pass.
+
+Representative captures are in `screenshots/upgrade/`. These are local demonstration records, not live customer data. Pricing is proposed and no billing service is connected. The existing limits above still apply; this is not an exhaustive accessibility or cross-browser audit.
