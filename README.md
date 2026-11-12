@@ -20,6 +20,21 @@ With Node.js installed, run the focused model and waitlist adapter tests:
 node --test tests/*.test.js
 ```
 
+## Deploy on Vercel
+
+1. In [Vercel New Project](https://vercel.com/new), import `NikhilVdd/Loop` and select `main`.
+2. Keep **Root Directory** at the repository root (`./`). The GitHub repository contains `dist` directly; do not enter `loop` or `dist` as the project root.
+3. The checked-in `vercel.json` selects **Other**, skips installation and building, and publishes only `dist`. No environment variables are required.
+4. Click **Deploy**. Verify `/`, `/pricing`, and `/#app/home` on the returned Vercel URL. Refresh `/pricing` to check direct routing.
+
+For a CLI deployment from the local `loop` directory, run `npx vercel` for a preview, then `npx vercel --prod` when ready. Vercel's local project metadata is ignored by Git.
+
+The pricing route explicitly serves its static HTML entry. Workspace navigation uses URL hashes, so it requires no catch-all rewrite. Unknown routes retain normal 404 behavior. Configuration follows [Vercel's project configuration documentation](https://vercel.com/docs/project-configuration/vercel-json).
+
+The app remains a browser-local prototype on Vercel. Saved workspace data and appearance preferences belong to each browser and origin; data on the existing demo domain will not automatically appear on a new Vercel domain. Waitlist entries remain local until an HTTPS endpoint is configured in `dist/config.js`; allow the Vercel/custom domain in that endpoint's CORS settings. Vercel environment variables are not automatically injected into these prebuilt browser files.
+
+The existing `.openai/hosting.json` supports the original demo host and is outside the Vercel output directory; it does not need changes for Vercel. This setup prepares deployment without creating or publishing a Vercel project.
+
 ## Primary walkthrough
 
 1. Choose **Explore the demo** on the landing page.
